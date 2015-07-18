@@ -1,6 +1,7 @@
 import numpy as np
 import math
 
+# Builds a decision tree stump. Not super usable for other data
 def buildStump(data, labels, weights):
     signs = ["<", ">"]
     
@@ -19,6 +20,8 @@ def buildStump(data, labels, weights):
                 bestSplit = split
     return bestError, bestSplit, bestSign
 
+# Given the data, labels, weights, and decision stump, tells you the weighted
+# error for the classifier
 def getClassifierError(data, labels, weights, stump):
     error = 0
     for i in xrange(len(data)):
@@ -26,6 +29,7 @@ def getClassifierError(data, labels, weights, stump):
             error += weights[i]
     return error
 
+# Given a stump and data value, classifies it as +1 or -1
 def classify(dataValue, stump):
     split = stump[1]
     sign = stump[2]
@@ -40,6 +44,7 @@ def classify(dataValue, stump):
         else:
             return -1;
 
+# Runs the adaboost algorithm on the dataset a specified number of times
 def boost(trainingIterations): 
     # lets get our data ready
     trainingData = np.array([0,1,2,3,4,5,6,7,8,9])
@@ -67,7 +72,7 @@ def boost(trainingIterations):
     # print our function
     function = "f_" + str(trainingIterations) + " = "
     for i in range(len(classifiers)):
-        function += str(classifierWeights[i]) + " * I(x " + classifiers[i][2] + " " + str(classifiers[i][1]) + ")"
+        function += "{0:.5f}".format(classifierWeights[i]) + " * I(x " + classifiers[i][2] + " " + str(classifiers[i][1]) + ")"
         if (i < len(classifiers) - 1):
             function += " + "
     print function
