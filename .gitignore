@@ -2,4 +2,4 @@
 .jar
 .javac
 /target
-.idea/*
+.idea/
